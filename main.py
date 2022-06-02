@@ -1,28 +1,50 @@
 import pandas as pd
 
-def inputEnglishSentences():
+def inputSubTitlePage():
+    pass
+
+def inputMainPage():
     mainPage = pd.read_excel('mainPage.xlsx')
     print(mainPage)
 
     choose = 0
     while 1:
         print("==========================")
-        print("Input Page")
+        print("Edit Title")
         print("==========================")
         print("1.add")
         print("2.remove")
         print("3.display")
+        print("4.edit sub title")
+        print("5.save to excel")
         print("0.exit")
         print("==========================")
         print("choose>")
         choose = int(input())
 
         if choose == 1:
-            pass
+            print("input date(ex.220501)")
+            date = input()
+            print("input title(ex.Oxford Reading Tree)")
+            title = input()
+            print("input subTitle(ex.book1)")
+            subTitle = input()
+            mainPage.loc[len(mainPage.index)] = [date, title, subTitle]
+            print(mainPage)
+
         elif choose == 2:
-            pass
+            print("choose index to remove>")
+            index = int(input())
+            mainPage = mainPage.drop(mainPage.index[index])
+            print(mainPage)
         elif choose == 3:
             print(mainPage)
+        elif choose == 4:
+            index = int(input())
+
+        elif choose == 5:
+            mainPage.to_excel('./mainPage.xlsx')
+            pass
         elif choose == 0:
             break
         else:
@@ -63,7 +85,7 @@ def showMainMenu():
         numMainMenu = int(input())
 
         if numMainMenu == int(1):
-            inputEnglishSentences()
+            inputMainPage()
             pass
         elif numMainMenu == int(2):
             pass
