@@ -1,10 +1,76 @@
 import pandas as pd
+from openpyxl import load_workbook
 
-def inputSubTitlePage():
-    pass
+def isWorkSheet(excelname, worksheet):
+    wb = load_workbook(excelname, read_only=True)
+    if worksheet in wb.sheetnames:
+        #print(f'exist {worksheet}')
+        return True
+    else:
+        #print(f'no exist {worksheet}')
+        return False
+
+def inputSubTitlePage(index):
+    if isWorkSheet('mainPage.xlsx', str(index)):
+        subPage = pd.read_excel('mainPage.xlsx', str(index))
+    else:
+        subPage = pd.to_excel('./mainPage.xlsx', sheet_name=str(index))
+    print(subPage)
+    while 1:
+        print("==========================")
+        print(f'Edit Contents ({str(index)})')
+        print("==========================")
+        print("1.add")
+        print("2.remove")
+        print("3.display")
+        print("4.edit contents")
+        print("5.save to excel")
+        print("0.exit")
+        print("==========================")
+        print("choose>")
+        choose = int(input())
+
+        if choose == 1: #add
+            print('input English >')
+            english = input()
+            print('input Korean >')
+            korean = input()
+            subPage.loc[len(subPage.index)] = [english, korean]
+            print(subPage)
+        elif choose == 2: #remove
+            print("choose index to remove>")
+            index = int(input())
+            subPage = subPage.drop(subPage.index[index])
+            print(subPage)
+        elif choose == 3: #display
+            print(subPage)
+        elif choose == 4: #edit
+            print(subPage)
+            print("edit index to edit>")
+            index = int(input())
+            print(subPage.loc[[index]])
+            print("Do you want to change English? > (y/n)")
+            ans = input()
+            if ans == 'y':
+                print('input English>')
+                english = input()
+            print("Do you want to change Korean? > (y/n)")
+            ans = input()
+            if ans == 'y':
+                print('input Korean>')
+                korean = input()
+            subPage.loc[[index]] = [english, korean]
+            print(subPage)
+        elif choose == 5: #save to excel
+            subPage.to_excel('./mainPage.xlsx', sheet_name=str(index))
+        elif choose == 0:
+            break
+        else:
+            print('wrong input')
+
 
 def inputMainPage():
-    mainPage = pd.read_excel('mainPage.xlsx')
+    mainPage = pd.read_excel('mainPage.xlsx', 'mainPage')
     print(mainPage)
 
     choose = 0
@@ -40,10 +106,12 @@ def inputMainPage():
         elif choose == 3:
             print(mainPage)
         elif choose == 4:
+            print(mainPage)
+            print('choose index>')
             index = int(input())
-
+            inputSubTitlePage(index)
         elif choose == 5:
-            mainPage.to_excel('./mainPage.xlsx')
+            mainPage.to_excel('./mainPage.xlsx', sheet_name='mainPage')
             pass
         elif choose == 0:
             break
@@ -52,23 +120,10 @@ def inputMainPage():
 
     return
 
-    '''
-    df = pd.DataFrame(
-        {
-            'date': ['220601',
-                       '220602',
-                       '220603'],
-            'title': ['Oxford Reading Tree',
-                         'Oxford Reading Tree',
-                         'Daisy'],
-            'subTitle': ['Tip Top',
-                           'Watch Your Step',
-                           'Book1']
-        }
-    )
-    df.to_excel('./mainPage.xlsx')
-    '''
-    return
+def showWelcome():
+    print("==========================")
+    print(' Welcome to M.E.S')
+    print("==========================")
 
 def showMainMenu():
     while 1:
@@ -100,6 +155,7 @@ def showMainMenu():
 
 
 def main():
+    showWelcome()
     showMainMenu()
 
 if __name__ == "__main__":
