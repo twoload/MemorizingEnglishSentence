@@ -16,5 +16,10 @@ for GUI in python
 * git push not updating files although changes have been made  
 https://stackoverflow.com/questions/43505518/git-push-not-updating-files-although-changes-have-been-made  
 * PyQt Korean Tutorial 
-https://wikidocs.net/35477  
+https://wikidocs.net/35477
+
+## Error  
+* No module named pandas  
+pip install --upgrade pandas  
+pip install pandas  
 * 
