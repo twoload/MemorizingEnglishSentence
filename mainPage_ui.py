@@ -2,7 +2,8 @@ import sys
 import pandas as pd
 from PyQt5.QtWidgets import *
 from PyQt5 import uic
-from main import *
+from myExcel import *
+from myPdf import *
 
 #UI파일 연결
 #단, UI파일은 Python 코드 파일과 같은 디렉토리에 위치해야한다.
@@ -18,35 +19,100 @@ class WindowClass(QMainWindow, form_class) :
         self.button_main_add.clicked.connect(self.HandlerButton_Main_Add)
         self.button_main_remove.clicked.connect(self.HandlerButton_Main_Remove)
         self.button_main_save.clicked.connect(self.HandlerButton_Main_Save)
+        self.button_main_prev.clicked.connect(self.HandlerButton_Main_Prev)
+        self.button_main_next.clicked.connect(self.HandlerButton_Main_Next)
         self.button_sub_add.clicked.connect(self.HandlerButton_Sub_Add)
         self.button_sub_remove.clicked.connect(self.HandlerButton_Sub_Remove)
         self.button_sub_save.clicked.connect(self.HandlerButton_Sub_Save)
-        self.button_sub_load.clicked.connect(self.HandlerButton_Sub_Load)
+        self.button_sub_prev.clicked.connect(self.HandlerButton_Sub_Prev)
+        self.button_sub_next.clicked.connect(self.HandlerButton_Sub_Next)
         self.button_study.clicked.connect(self.HandlerButton_Study)
 
         #main table init display
+
+        '''
+        print('tableWidget_main col num: %d' %(self.tableWidget_main.columnCount()))
+        print('tableWidget_main row num: %d' %(self.tableWidget_main.rowCount()))
+        '''
+        self.tableWidget_main.setItem(0, 0, QTableWidgetItem('Apple'))
+        self.tableWidget_main.setItem(0, 1, QTableWidgetItem('Banana'))
+        self.tableWidget_main.setItem(1, 0, QTableWidgetItem('Orange'))
+        self.tableWidget_main.setItem(1, 1, QTableWidgetItem('Grape'))
+
+        #layout = QVBoxLayout()
+        #layout.addWidget(self.tableWidget)
+        #self.setLayout(layout)
+
+        self.setWindowTitle('PyQt5 - QTableWidget')
+        self.setGeometry(300, 100, 600, 400)
+        self.show()
         #sub table init display
 
+    # inner function
+
+    # Event
     def HandlerButton_Main_Add(self):
-        print("button_main_add Clicked")
+        #print("button_main_add Clicked")
+        selectionModel = self.tableWidget_main.selectionModel()
+        if not selectionModel.hasSelection():
+            self.tableWidget_main.insertRow(self.tableWidget_main.rowCount())
+        else:
+            for index in selectionModel.selectedIndexes():
+                self.tableWidget_main.insertRow(index.row())
 
     def HandlerButton_Main_Remove(self):
         print("button_main_remove Clicked")
+        selectionModel = self.tableWidget_main.selectionModel()
+        if not selectionModel.hasSelection():
+            self.tableWidget_main.removeRow(self.tableWidget_main.rowCount() - 1)
+        else:
+            for index in selectionModel.selectedIndexes():
+                self.tableWidget_main.removeRow(index.row())
 
     def HandlerButton_Main_Save(self):
         print("button_main_save Clicked")
 
+    def HandlerButton_Main_Prev(self):
+        print("button_main_prev Clicked")
+        scrollBar = self.tableWidget_main.verticalScrollBar()
+        scrollBar.setValue(scrollBar.value() - scrollBar.pageStep())
+
+    def HandlerButton_Main_Next(self):
+        print("button_main_next Clicked")
+        scrollBar = self.tableWidget_main.verticalScrollBar()
+        scrollBar.setValue(scrollBar.value() + scrollBar.pageStep())
+
+
     def HandlerButton_Sub_Add(self):
         print("button_sub_add Clicked")
+        selectionModel = self.tableWidget_sub.selectionModel()
+        if not selectionModel.hasSelection():
+            self.tableWidget_sub.insertRow(self.tableWidget_sub.rowCount())
+        else:
+            for index in selectionModel.selectedIndexes():
+                self.tableWidget_sub.insertRow(index.row())
 
     def HandlerButton_Sub_Remove(self):
         print("button_sub_remove Clicked")
+        selectionModel = self.tableWidget_sub.selectionModel()
+        if not selectionModel.hasSelection():
+            self.tableWidget_sub.removeRow(self.tableWidget_sub.rowCount() - 1)
+        else:
+            for index in selectionModel.selectedIndexes():
+                self.tableWidget_sub.removeRow(index.row())
 
     def HandlerButton_Sub_Save(self):
         print("button_sub_save Clicked")
 
-    def HandlerButton_Sub_Load(self):
-        print("button_sub_load Clicked")
+    def HandlerButton_Sub_Prev(self):
+        print("button_sub_prev Clicked")
+        scrollBar = self.tableWidget_sub.verticalScrollBar()
+        scrollBar.setValue(scrollBar.value() - scrollBar.pageStep())
+
+    def HandlerButton_Sub_Next(self):
+        print("button_sub_next Clicked")
+        scrollBar = self.tableWidget_sub.verticalScrollBar()
+        scrollBar.setValue(scrollBar.value() + scrollBar.pageStep())
 
     def HandlerButton_Study(self):
         print("button_study Clicked")

@@ -6,18 +6,30 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>701</width>
-    <height>455</height>
+    <width>500</width>
+    <height>900</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>500</width>
+    <height>900</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>500</width>
+    <height>900</height>
+   </size>
+  </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>memorizingEnglishSentence</string>
   </property>
   <widget class="QPushButton" name="button_main_add">
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>160</y>
+     <y>370</y>
      <width>80</width>
      <height>23</height>
     </rect>
@@ -26,24 +38,11 @@
     <string>Add</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="button_sub_load">
-   <property name="geometry">
-    <rect>
-     <x>270</x>
-     <y>370</y>
-     <width>80</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>load</string>
-   </property>
-  </widget>
   <widget class="QPushButton" name="button_study">
    <property name="geometry">
     <rect>
-     <x>0</x>
-     <y>400</y>
+     <x>180</x>
+     <y>860</y>
      <width>80</width>
      <height>23</height>
     </rect>
@@ -56,16 +55,38 @@
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>10</y>
-     <width>701</width>
-     <height>141</height>
+     <y>30</y>
+     <width>500</width>
+     <height>321</height>
     </rect>
    </property>
-   <column>
+   <property name="minimumSize">
+    <size>
+     <width>500</width>
+     <height>321</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>500</width>
+     <height>321</height>
+    </size>
+   </property>
+   <row>
     <property name="text">
-     <string>index</string>
+     <string>1</string>
     </property>
-   </column>
+   </row>
+   <row>
+    <property name="text">
+     <string>2</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>3</string>
+    </property>
+   </row>
    <column>
     <property name="text">
      <string>date</string>
@@ -81,15 +102,42 @@
      <string>sub</string>
     </property>
    </column>
+   <item row="0" column="0">
+    <property name="text">
+     <string>220601</string>
+    </property>
+   </item>
+   <item row="0" column="1">
+    <property name="text">
+     <string>ORG</string>
+    </property>
+   </item>
+   <item row="0" column="2">
+    <property name="text">
+     <string>chapter1</string>
+    </property>
+   </item>
   </widget>
   <widget class="QTableWidget" name="tableWidget_sub">
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>220</y>
-     <width>701</width>
-     <height>141</height>
+     <y>430</y>
+     <width>500</width>
+     <height>321</height>
     </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>500</width>
+     <height>321</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>500</width>
+     <height>321</height>
+    </size>
    </property>
    <column>
     <property name="text">
@@ -102,34 +150,11 @@
     </property>
    </column>
   </widget>
-  <widget class="QPushButton" name="button_save">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>430</y>
-     <width>80</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>save</string>
-   </property>
-  </widget>
-  <widget class="QComboBox" name="filter_by_index">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>190</y>
-     <width>79</width>
-     <height>23</height>
-    </rect>
-   </property>
-  </widget>
   <widget class="QPushButton" name="button_main_remove">
    <property name="geometry">
     <rect>
      <x>90</x>
-     <y>160</y>
+     <y>370</y>
      <width>80</width>
      <height>23</height>
     </rect>
@@ -142,7 +167,7 @@
    <property name="geometry">
     <rect>
      <x>180</x>
-     <y>160</y>
+     <y>370</y>
      <width>80</width>
      <height>23</height>
     </rect>
@@ -155,7 +180,7 @@
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>370</y>
+     <y>770</y>
      <width>80</width>
      <height>23</height>
     </rect>
@@ -168,7 +193,7 @@
    <property name="geometry">
     <rect>
      <x>90</x>
-     <y>370</y>
+     <y>770</y>
      <width>80</width>
      <height>23</height>
     </rect>
@@ -181,13 +206,104 @@
    <property name="geometry">
     <rect>
      <x>180</x>
-     <y>370</y>
+     <y>770</y>
      <width>80</width>
      <height>23</height>
     </rect>
    </property>
    <property name="text">
     <string>Save</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="button_main_prev">
+   <property name="geometry">
+    <rect>
+     <x>270</x>
+     <y>370</y>
+     <width>80</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>&lt;</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="button_main_next">
+   <property name="geometry">
+    <rect>
+     <x>360</x>
+     <y>370</y>
+     <width>80</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>&gt;</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="button_sub_prev">
+   <property name="geometry">
+    <rect>
+     <x>270</x>
+     <y>770</y>
+     <width>80</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>&lt;</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="button_sub_next">
+   <property name="geometry">
+    <rect>
+     <x>360</x>
+     <y>770</y>
+     <width>80</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>&gt;</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="SubPage">
+   <property name="geometry">
+    <rect>
+     <x>200</x>
+     <y>410</y>
+     <width>59</width>
+     <height>15</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Sub Page</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="MainPage">
+   <property name="geometry">
+    <rect>
+     <x>200</x>
+     <y>10</y>
+     <width>71</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Main Page</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="StudyPage">
+   <property name="geometry">
+    <rect>
+     <x>188</x>
+     <y>830</y>
+     <width>71</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Study Page</string>
    </property>
   </widget>
  </widget>
