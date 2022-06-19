@@ -28,4 +28,6 @@ pip install pandas
 ** index column will be skipped  
 * data doesn't show up even though setItem in qtTableWidget.  
 ** row.append is needed  
-*
+* dataframe row remove  
+** df = df.drop  
+* 

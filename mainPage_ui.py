@@ -82,9 +82,14 @@ class WindowClass(QMainWindow, form_class) :
         selectionModel = self.tableWidget_main.selectionModel()
         if not selectionModel.hasSelection():
             self.tableWidget_main.removeRow(self.tableWidget_main.rowCount() - 1)
+            # update dataframe
+            self.df_main_class.remove_row(self.tableWidget_main.rowCount() - 1)
         else:
             for index in selectionModel.selectedIndexes():
                 self.tableWidget_main.removeRow(index.row())
+                # update dataframe
+                self.df_main_class.remove_row(index.row())
+
 
     def HandlerButton_Main_Save(self):
         print("button_main_save Clicked")

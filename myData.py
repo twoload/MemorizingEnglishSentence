@@ -50,7 +50,7 @@ class mainPageDatabase:
         self.df.loc[len(self.df.index)] = []
 
     def remove_row(self, row_index):
-        self.df.drop(self.df.index[row_index])
+        self.df = self.df.drop(self.df.index[row_index])
 
     def update_item(self, row_index, col_name, value):
         self.df.loc[row_index, [col_name]] = [value]
