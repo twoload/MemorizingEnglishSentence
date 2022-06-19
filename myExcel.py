@@ -8,7 +8,7 @@ def excel2dataframe(excelFilename, worksheetName):
     return df
 
 def dataframe2excel(df, excelFilename, worksheetName):
-    df.to_excel(excelFilename, sheet_name = worksheetName)
+    df.to_excel(excelFilename, sheet_name = worksheetName, index=False)
 
 
 def isWorkSheet(excelFilename, worksheet):

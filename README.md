@@ -22,4 +22,10 @@ https://wikidocs.net/35477
 * No module named pandas  
 pip install --upgrade pandas  
 pip install pandas  
-* 
+* excel column text : lowercase  
+** horizontalHeaderItem.text() : lowercase  
+* to_excel : index = False  
+** index column will be skipped  
+* data doesn't show up even though setItem in qtTableWidget.  
+** row.append is needed  
+*

@@ -7,7 +7,7 @@ MAINPAGE_SHEETNAME = 'mainPage'
 class mainPageDatabase:
 
     def __init__(self):
-        self.df = pd.DataFrame([], columns=['Date', 'Title', 'Sub'])
+        self.df = pd.DataFrame([], columns=['date', 'title', 'sub'])
         self.init()
 
     def init(self):
@@ -21,6 +21,7 @@ class mainPageDatabase:
             num_matched_column = self.df.columns.intersection(read_df.columns).size
             if num_matched_column == len(self.df.columns):
                 self.df = read_df
+                #print(self.df)
                 return True
             else:
                 print('not match column head')
@@ -53,6 +54,7 @@ class mainPageDatabase:
 
     def update_item(self, row_index, col_name, value):
         self.df.loc[row_index, [col_name]] = [value]
+        #print(self.df)
 
     def save(self):
         dataframe2excel(self.df, MAINPAGE_FILENAME, MAINPAGE_SHEETNAME)
@@ -84,5 +86,6 @@ class subPageDatabase:
     def getDataFrame(self):
         return self.df
 
-#tc = mainPageDatabase()
-#tc.init()
+tc = mainPageDatabase()
+tc.init()
+tc.update_item(1, 'Date', 220701)

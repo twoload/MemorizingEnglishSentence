@@ -6,6 +6,7 @@ from myExcel import *
 from myPdf import *
 from myData import mainPageDatabase
 import numpy as np
+import time
 
 #UI파일 연결
 #단, UI파일은 Python 코드 파일과 같은 디렉토리에 위치해야한다.
@@ -30,19 +31,29 @@ class WindowClass(QMainWindow, form_class) :
         self.button_sub_next.clicked.connect(self.HandlerButton_Sub_Next)
         self.button_study.clicked.connect(self.HandlerButton_Study)
 
+        self.tableWidget_main.itemChanged.connect(self.HandlerMainItem_Changed)
+
         # main table init display
         self.df_main_class = mainPageDatabase()
         if not self.df_main_class.df.empty:
             df_main_numpy = self.df_main_class.df.to_numpy()
-            for row_index in range(len(df_main_numpy)):
-                for col_index in range(len(df_main_numpy[0])):
+            rows, columns = df_main_numpy.shape
+            #print(rows, columns)
+            for row_index in range(rows):
+                # insert row
+                self.tableWidget_main.insertRow(self.tableWidget_main.rowCount())
+                for col_index in range(columns): # skip index row
                     item = df_main_numpy[row_index, col_index]
+                    #print(row_index, col_index, item)
                     self.tableWidget_main.setItem(row_index, col_index, QTableWidgetItem(str(item)))
 
-
+        print(self.df_main_class.df)
         '''
         print('tableWidget_main col num: %d' %(self.tableWidget_main.columnCount()))
         print('tableWidget_main row num: %d' %(self.tableWidget_main.rowCount()))
+        for i in range(0, rowcount):
+            for j in range(0, colcount):
+                data = self.tableWidget.item(i, j)
         '''
 
         #layout = QVBoxLayout()
@@ -77,6 +88,7 @@ class WindowClass(QMainWindow, form_class) :
 
     def HandlerButton_Main_Save(self):
         print("button_main_save Clicked")
+        self.df_main_class.save()
 
     def HandlerButton_Main_Prev(self):
         print("button_main_prev Clicked")
@@ -88,6 +100,13 @@ class WindowClass(QMainWindow, form_class) :
         scrollBar = self.tableWidget_main.verticalScrollBar()
         scrollBar.setValue(scrollBar.value() + scrollBar.pageStep())
 
+    def HandlerMainItem_Changed(self, item):
+        #print('HandlerMainItem_Changed (%d %d)' %(item.row(), item.column()))
+        data = self.tableWidget_main.item(item.row(), item.column())
+        col_label = self.tableWidget_main.horizontalHeaderItem(item.column()).text()
+        #print('changed : (%d %s %s)' %(item.row(), col_label, data.text()))
+        self.df_main_class.update_item(item.row(), col_label, data.text())
+        #print(self.df_main_class.df)
 
     def HandlerButton_Sub_Add(self):
         print("button_sub_add Clicked")

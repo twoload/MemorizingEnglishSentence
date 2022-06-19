@@ -72,21 +72,6 @@
      <height>321</height>
     </size>
    </property>
-   <row>
-    <property name="text">
-     <string>1</string>
-    </property>
-   </row>
-   <row>
-    <property name="text">
-     <string>2</string>
-    </property>
-   </row>
-   <row>
-    <property name="text">
-     <string>3</string>
-    </property>
-   </row>
    <column>
     <property name="text">
      <string>date</string>
@@ -102,21 +87,6 @@
      <string>sub</string>
     </property>
    </column>
-   <item row="0" column="0">
-    <property name="text">
-     <string>220601</string>
-    </property>
-   </item>
-   <item row="0" column="1">
-    <property name="text">
-     <string>ORG</string>
-    </property>
-   </item>
-   <item row="0" column="2">
-    <property name="text">
-     <string>chapter1</string>
-    </property>
-   </item>
   </widget>
   <widget class="QTableWidget" name="tableWidget_sub">
    <property name="geometry">
