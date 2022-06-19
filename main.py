@@ -73,6 +73,7 @@ def inputMainPage():
         print("==========================")
         print("Edit Title")
         print("==========================")
+        print("==========================")
         print("1.add")
         print("2.remove")
         print("3.display")

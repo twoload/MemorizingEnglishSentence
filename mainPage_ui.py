@@ -4,6 +4,8 @@ from PyQt5.QtWidgets import *
 from PyQt5 import uic
 from myExcel import *
 from myPdf import *
+from myData import mainPageDatabase
+import numpy as np
 
 #UI파일 연결
 #단, UI파일은 Python 코드 파일과 같은 디렉토리에 위치해야한다.
@@ -28,16 +30,20 @@ class WindowClass(QMainWindow, form_class) :
         self.button_sub_next.clicked.connect(self.HandlerButton_Sub_Next)
         self.button_study.clicked.connect(self.HandlerButton_Study)
 
-        #main table init display
+        # main table init display
+        self.df_main_class = mainPageDatabase()
+        if not self.df_main_class.df.empty:
+            df_main_numpy = self.df_main_class.df.to_numpy()
+            for row_index in range(len(df_main_numpy)):
+                for col_index in range(len(df_main_numpy[0])):
+                    item = df_main_numpy[row_index, col_index]
+                    self.tableWidget_main.setItem(row_index, col_index, QTableWidgetItem(str(item)))
+
 
         '''
         print('tableWidget_main col num: %d' %(self.tableWidget_main.columnCount()))
         print('tableWidget_main row num: %d' %(self.tableWidget_main.rowCount()))
         '''
-        self.tableWidget_main.setItem(0, 0, QTableWidgetItem('Apple'))
-        self.tableWidget_main.setItem(0, 1, QTableWidgetItem('Banana'))
-        self.tableWidget_main.setItem(1, 0, QTableWidgetItem('Orange'))
-        self.tableWidget_main.setItem(1, 1, QTableWidgetItem('Grape'))
 
         #layout = QVBoxLayout()
         #layout.addWidget(self.tableWidget)
