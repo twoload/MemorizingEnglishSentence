@@ -5,6 +5,7 @@ from PyQt5 import uic
 from myExcel import *
 from myPdf import *
 from myData import mainPageDatabase
+from myData import subPageDatabase
 import numpy as np
 import time
 
@@ -32,6 +33,8 @@ class WindowClass(QMainWindow, form_class) :
         self.button_study.clicked.connect(self.HandlerButton_Study)
 
         self.tableWidget_main.itemChanged.connect(self.HandlerMainItem_Changed)
+        self.tableWidget_main.itemClicked.connect(self.HandlerMainItem_onClicked)
+        self.tableWidget_sub.itemChanged.connect(self.HandlerSubItem_Changed)
 
         # main table init display
         self.df_main_class = mainPageDatabase()
@@ -47,7 +50,10 @@ class WindowClass(QMainWindow, form_class) :
                     #print(row_index, col_index, item)
                     self.tableWidget_main.setItem(row_index, col_index, QTableWidgetItem(str(item)))
 
-        print(self.df_main_class.df)
+        #print(self.df_main_class.df)
+
+        # sub table init display
+        self.df_sub_class = subPageDatabase()
         '''
         print('tableWidget_main col num: %d' %(self.tableWidget_main.columnCount()))
         print('tableWidget_main row num: %d' %(self.tableWidget_main.rowCount()))
@@ -66,6 +72,25 @@ class WindowClass(QMainWindow, form_class) :
         #sub table init display
 
     # inner function
+
+    # if serveral items are selected, first called item will be returned
+    def getCurrentSheetInfo(self):
+        info = {'row': -1, 'col': -1, 'item_name': ''}
+        selection_model = self.tableWidget_main.selectionModel()
+        if not selection_model.hasSelection():
+            return info
+        else:
+            for index in selection_model.selectedIndexes():
+                col_label = self.tableWidget_main.horizontalHeaderItem(index.column()).text()
+                if col_label == 'sub':
+                    item_name = self.tableWidget_main.item(index.row(), index.column()).text()
+                    info = {'row': index.row(), 'col': index.column(), 'item_name': item_name}
+                    return info
+        return info
+
+    def getCurrentSheetName(self):
+        info = self.getCurrentSheetInfo()
+        return info['item_name']
 
     # Event
     def HandlerButton_Main_Add(self):
@@ -113,6 +138,29 @@ class WindowClass(QMainWindow, form_class) :
         self.df_main_class.update_item(item.row(), col_label, data.text())
         #print(self.df_main_class.df)
 
+    def HandlerMainItem_onClicked(self, item):
+        print('HandlerMainItem_onClicked (%d %d)' % (item.row(), item.column()))
+        col_label = self.tableWidget_main.horizontalHeaderItem(item.column()).text()
+        print('col name: %s' % col_label)
+        # display sub
+        if col_label == 'sub':
+            # clear
+            self.tableWidget_sub.setRowCount(0)
+            # display
+            df = self.df_sub_class.dataframes[str(item.text())]
+            print(df)
+            if not df.empty:
+                df_main_numpy = df.to_numpy()
+                rows, columns = df_main_numpy.shape
+                # print(rows, columns)
+                for row_index in range(rows):
+                    # insert row
+                    self.tableWidget_sub.insertRow(self.tableWidget_sub.rowCount())
+                    for col_index in range(columns):  # skip index row
+                        item = df_main_numpy[row_index, col_index]
+                        # print(row_index, col_index, item)
+                        self.tableWidget_sub.setItem(row_index, col_index, QTableWidgetItem(str(item)))
+
     def HandlerButton_Sub_Add(self):
         print("button_sub_add Clicked")
         selectionModel = self.tableWidget_sub.selectionModel()
@@ -124,15 +172,42 @@ class WindowClass(QMainWindow, form_class) :
 
     def HandlerButton_Sub_Remove(self):
         print("button_sub_remove Clicked")
+        sheet_name = self.getCurrentSheetName()
         selectionModel = self.tableWidget_sub.selectionModel()
         if not selectionModel.hasSelection():
             self.tableWidget_sub.removeRow(self.tableWidget_sub.rowCount() - 1)
+            # update dataframe
+            self.df_sub_class.remove_row(sheet_name, self.tableWidget_main.rowCount() - 1)
         else:
             for index in selectionModel.selectedIndexes():
                 self.tableWidget_sub.removeRow(index.row())
+                # update dataframe
+                self.df_sub_class.remove_row(sheet_name, index.row())
+
+    def HandlerSubItem_Changed(self, item):
+        #print('HandlerSubItem_Changed (%d %d)' %(item.row(), item.column()))
+        # find sheet_name
+        sheet_name = self.getCurrentSheetName()
+        data = self.tableWidget_sub.item(item.row(), item.column())
+        col_label = self.tableWidget_sub.horizontalHeaderItem(item.column()).text()
+        self.df_sub_class.update_item(sheet_name, item.row(), col_label, data.text())
 
     def HandlerButton_Sub_Save(self):
         print("button_sub_save Clicked")
+        # find sheet to save
+        selection_model = self.tableWidget_main.selectionModel()
+        if not selection_model.hasSelection():
+            print('HandlerButton_Sub_Save: no selection')
+        else:
+            for index in selection_model.selectedIndexes():
+                #print('HandlerButton_Sub_Save: selection (%d %d)' %(index.row(), index.column()))
+                col_label = self.tableWidget_main.horizontalHeaderItem(index.column()).text()
+                #print(col_label, index.column())
+                if col_label == 'sub':
+                    print(index.row(), index.column())
+                    item_name = self.tableWidget_main.item(index.row(), index.column()).text()
+                    #print(item_name)
+                    self.df_sub_class.save(item_name)
 
     def HandlerButton_Sub_Prev(self):
         print("button_sub_prev Clicked")
