@@ -11,6 +11,13 @@ when creating pdf, Korean encoding is needed
 convenient install considering dependency  
 * PyQt5  
 for GUI in python  
+* ExcelWriter  
+** An example of writing multiple dataframes to worksheets using Pandas  
+** append : mode='a'  
+** if_sheet_exists="replace"  
+* openpyxl   
+** remove excel sheet  
+* 
 
 ## WebPages  
 * git push not updating files although changes have been made  
